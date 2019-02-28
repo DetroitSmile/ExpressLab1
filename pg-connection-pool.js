@@ -3,7 +3,7 @@
 const pg = require("pg");
 const credentials = new pg.Pool({
 user: "postgres",
-password: "erFp5yew",
+password: "password",
 host: "localhost",
 port: 5432,
 database: "ExpressShopDB",
