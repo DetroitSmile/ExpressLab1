@@ -8,7 +8,7 @@ app.use(express.static("./public"));
 app.use(express.json());
 app.use("/", cartItems)
 
-app.listen(8888, function() {
+app.listen(7777, function() {
   console.log("Server is running");
 })
 

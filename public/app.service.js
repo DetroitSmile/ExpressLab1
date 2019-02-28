@@ -12,21 +12,22 @@ function CartService($http) {
   self.addItem = function(newItem) {
     return $http({
       method: "POST",
+      url: `/cart-items`,
       data: newItem
     })
   }
 
   self.deleteItem = function(id) {
     return $http({
+      method: "DELETE",
       url: `/cart-items/${id}`,
-      method: "DELETE"
     })
   }
-  self.updateItem = function(editedItem) {
+  self.updateItem = function(item, newItem) {
     return $http({
-      url: `/cart-items/${editedItem.id}`,
+      url: `/cart-items/${item.id}`,
       method: "PUT",
-      data: editedItem
+      data: newItem
     })
   }
 

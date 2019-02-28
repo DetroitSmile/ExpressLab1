@@ -2,57 +2,33 @@
 
 const express = require("express");
 const cartItems = express.Router();
+const pool = require("./pg-connection-pool")
 
-const cartList = [ 
-  {
-    id: 0,
-    product: `hat`,
-    price: 30,
-    quantity: `1`
-  },
-  {
-    id: 1,
-    product: `bat`,
-    price: 40,
-    quantity: `1`
-  },
-  {
-    id: 2,
-    product: `cat`,
-    price: 50,
-    quantity: `1`
-  }
+function selectAll(req, res) {
+  pool.query("select * from ShoppingCart").then(function(result) {
+    res.send(result.rows);
+  })
+}
 
-]
 cartItems.get("/cart-items", function(req,res) {
-  console.log("GET request made");
-  res.send(cartList);
-})
+  selectAll(req,res);
+  })
+
 cartItems.post("/cart-items", function(req, res){
-  cartList.push(req.body);
-  console.log("POST method made");
-  res.send(cartList);
+  pool.query("insert into ShoppingCart (product, price, quantity) values ($1::text, $2::int, $3::int)", [req.body.product, req.body.price, req.body.quantity]).then(function(result){
+    selectAll(req,res);
+  });
 });
+
 cartItems.put("/cart-items/:id", function(req, res) {
-  for(let i = 0; i < cartList.length; i++) {
-    if(cartList[i].id == req.params.id) {
-      cartList.splice(i, 1, req.body);
-      console.log(req.body)
-      console.log(req.params)
-      res.send(cartList);
-      break;
-    }
-  }
-  console.log("DELETE rquest made")
+  pool.query("update ShoppingCart set product=$1::text, price=$2::int, quantity=$3::int where id=$4::int", [req.body.product, req.body.price, req.body.quantity,req.params.id]).then(function(){
+    selectAll(req, res);
+  });
 });
-cartItems.delete("cart-items/:id", function(req, res) {
-  for(let i=0; i < cartList.length; i++) {
-    if(cartList[i].id == req.params.id) {
-      cartList.splice(i, 1);
-      res.send(cartList);
-      break;
-    }
-  }
-  console.log("Delete request made")
+cartItems.delete("/cart-items/:id", function(req, res) {
+  pool.query("Delete from ShoppingCart where id=$1::int", [req.params.id])
+  .then(function(){
+    selectAll(req, res);
+  });
 });
 module.exports = cartItems

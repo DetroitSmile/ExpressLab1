@@ -16,6 +16,7 @@ body {
 h2 {
   display: flex;
   justify-content: center;
+  font-size: 36px;
 }
 
 .list-items {
@@ -23,10 +24,30 @@ h2 {
   flex-direction: row;
   justify-content: space-between;
   margin: 20px 20px;
+  border-color: white;
 }
 
 .new-item {
   border: 5px solid black;
   margin-left: 40%;
   margin-right: 40%;
+  margin-bottom: 20px;
+  border-color:  #00FF41;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.add {
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+button {
+  padding: 5px 30px;
+  border-radius: 5px;
+}
+
+.list-items-containers {
+  border-color: #00FF41;
 }
