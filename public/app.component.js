@@ -1,5 +1,4 @@
 "use strict";
-
 const cartItems = {
     templateUrl: "app.component.html",
     controller: ["CartService", function (CartService) {
@@ -15,14 +14,12 @@ const cartItems = {
         };
 
         vm.deleteItem = function(item) {
-            // console.log(item);
             CartService.deleteItem(item).then(updateList);
         };
 
         vm.updateItem = function(editedItem) {
             CartService.updateItem(editedItem).then(updateList);
         };
-
     }]
 }
 
