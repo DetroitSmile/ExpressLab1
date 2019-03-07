@@ -1,2 +1,2 @@
 "use strict";
-angular.module("App", [])
+angular.module("App", []);
